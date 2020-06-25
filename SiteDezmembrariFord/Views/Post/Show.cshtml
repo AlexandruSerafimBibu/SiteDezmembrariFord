@@ -1,0 +1,33 @@
+﻿@model SiteDezmembrariFord.ViewModels.ShowPostViewModel
+
+<h2>Anunt</h2>
+
+
+@if(Model.IsAdmin == true || Model.IsOwner == true)
+{
+    @Html.ActionLink(Model.Post.Title, "Edit", "Post", new { id = Model.Post.Id }, null)
+}
+
+<br />
+@if (Model.Post.PostType == true)
+{
+    <span>Anunt piese</span>
+}
+else
+{
+    <span>Anunt dezmembrari</span>
+}
+<br />
+@Html.Raw(Model.Post.Description.Replace(Environment.NewLine, "<br />"))
+<br />
+@if(Model.Post.SubCategory.Name != "")
+{
+    @Model.Post.SubCategory.Name;
+    <br/>
+}
+Judet: @Model.Post.Counties.Name
+<br />
+Data postarii: @Model.Post.Date
+<br />
+Cel care a postat: @Model.Post.User.UserName
+<br />

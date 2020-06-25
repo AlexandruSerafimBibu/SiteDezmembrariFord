@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SiteDezmembrariFord.Models.Category>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista categorii</h2>
+@Html.ActionLink("Adauga categorie", "New", "Category", null, new { @class = "btn btn-primary" })
+@if (!Model.Any())
+{
+    <p>Nu exista nicio categorie..</p>
+}
+<table class="table table-bordered table-hover">
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(category.Name, "Edit", "Category", new { id = category.Id }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

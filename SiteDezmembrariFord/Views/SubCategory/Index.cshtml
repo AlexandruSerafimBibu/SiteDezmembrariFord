@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SiteDezmembrariFord.Models.SubCategory>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista subcategorii</h2>
+@Html.ActionLink("Adauga subcategorie", "New", "SubCategory", null, new { @class = "btn btn-primary" })
+@if (!Model.Any())
+{
+    <p>Nu exista nicio subcategorie..</p>
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Categorie</th>
+            <th>Subcategorie</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subCategory in Model)
+        {
+            <tr>
+                <td>@subCategory.Category.Name</td>
+                <td>@Html.ActionLink(subCategory.Name, "Edit", "SubCategory", new { id = subCategory.Id }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

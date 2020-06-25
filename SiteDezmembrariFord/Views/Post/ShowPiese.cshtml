@@ -1,0 +1,74 @@
+﻿@model List<SiteDezmembrariFord.Models.Post>
+
+<h2>Anunturi piese</h2>
+
+<div>
+    @Html.ActionLink("Preturi RON", "ShowPieseRon", "Post", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Preturi EUR", "ShowPieseEuro", "Post", null, new { @class = "btn btn-primary" })
+</div>
+<table border="0" cellspacing="5" cellpadding="5">
+    <tbody>
+        <tr>
+            <td>Pret minim: </td>
+            <td><input class ="form-control input-sm"type="text" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Pret maxim: </td>
+            <td><input class ="form-control input-sm" type="text" id="max" name="max"></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="anunturi" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Pret</th>
+            <th>Locatie</th>
+            <th>Data adaugarii</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr id="@Model.FindIndex(p => p.Id == post.Id)">
+                <td>@Html.ActionLink(post.Title, "Show", "Post", new { id = post.Id }, null)</td>
+                <td>@post.Pret</td>
+                <td>@post.Counties.Name</td>
+                <td>@post.Date.ToString("dd MMM yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                
+                var min = parseInt( $('#min').val(), 10 );
+                var max = parseInt($('#max').val(), 10);
+                var pret = parseFloat(data[1]) || 0;
+
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                     ( isNaN( min ) && pret <= max ) ||
+                     ( min <= pret   && isNaN( max ) ) ||
+                     ( min <= pret   && pret <= max ) )
+                {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $(document).ready(function () {
+            var dataTableInstance = $("#anunturi").DataTable();
+
+            $('#min, #max').keyup(function () {
+                dataTableInstance.draw();
+            });
+        });
+    </script>
+}

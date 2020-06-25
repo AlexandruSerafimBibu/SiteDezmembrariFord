@@ -1,0 +1,46 @@
+﻿@model List<SiteDezmembrariFord.Models.Post>
+
+<h2>Anunturi dezmembrari</h2>
+
+<table id="anunturi" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Descriere</th>
+            <th>Locatie</th>
+            <th>Data adaugarii</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr id="@Model.FindIndex(p => p.Id == post.Id)">
+                <td>@Html.ActionLink(post.Title, "Show", "Post", new { id = post.Id }, null)</td>
+                <td>
+                    @if(post.Description != null && post.Description.Length > 47)
+                    {
+                        var str = post.Description.Substring(0, 47) + "...";
+                        @str
+                    }
+                    else
+                    {
+                        @post.Description
+                    }
+
+                </td>
+                <td>@post.Counties.Name</td>
+                <td>@post.Date.ToString("dd MMM yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var dataTableInstance = $("#anunturi").DataTable();
+        });
+    </script>
+}

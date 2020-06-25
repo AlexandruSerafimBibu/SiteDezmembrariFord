@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>Te rog sa alegi ce tipuri de anunturi vrei sa vezi</div>
+@Html.ActionLink("Adauga anunt", "New", "Post", null, new { @class = "btn btn-primary" })
+<br />
+@Html.ActionLink("Vezi anunturi piese", "ShowPieseRon", "Post", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Vezi anunturi dezmembrari", "ShowDezmembrari", "Post", null, new { @class = "btn btn-primary" })
